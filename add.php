@@ -1,40 +1,58 @@
 <?php
-
-    header("Access-Control-Allow-Origin: http://localhost:3000");
-    header("Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS");
-    header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
-
     // Only process POST requests.
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      // Get email address from '.credentials' file in the root
-      // $credentialsFile = fopen(".credentials","r");
-      // $myEmail = fgets($credentialsFile);
-
-      // Get the form fields and remove any potential whitespace.
-      // $name = strip_tags(trim($_POST["inputName"]));
-      // $name = str_replace(array("\r","\n"),array(" "," "),$name);
-      // $email = filter_var(trim($_POST["inputEmail"]), FILTER_SANITIZE_EMAIL);
-      // $message = trim($_POST["inputMessage"]);
-      // $checkBoth = trim($_POST["inputCheckBoth"]);
-      // $checkDesign = trim($_POST["inputCheckDesign"]);
-      // $checkDev = trim($_POST["inputCheckDev
+      // set defaults
+      $result = true;
+      $message = "";
+      $error = [];
 
       $username = $_POST["username"];
       $comment = $_POST["comment"];
+      //console.log($username, $comment);
 
-      // Check that data was sent to the mailer.
-     if ( empty($username) OR empty($comment) ) {
+      // Check if username is longer than 3 chars
+      if (strlen(trim($username)) < 2) {
+        $result = false;
+        $error[] = "Please enter a name three characters or more";
+      }
+
+      // Check if there is a comment longer than 10 chars
+      if (strlen(trim($username)) < 9) {
+        $result = false;
+        $error[] =  "Please enter a comment of 10 characters or more";
+      }
+
+
+      // create message depending on result
+     if ( !$result ) {
         // Set a 400 (bad request) response code and exit.
-        //http_response_code(400);
-        echo "Oops! There was a problem with your submission. Please complete the form and try again.";
-        exit;
+        // http_response_code(400);
+        $message =  "Please complete the form and try again.";
       } else {
-        echo "Thank You " + $username + "! Your message has been saved.";
+        $message = "Thank You " . $username . "! Your message has been saved.";
       }
 
     } else {
       // Not a POST request, set a 403 (forbidden) response code.
-      //http_response_code(403);
-      echo "This was not a POST request, please try again.";
+      // http_response_code(403);
+      $result = false;
+      $message =  "This was not a POST request, please try again.";
     }
+
+    // create response to send back to client
+    // add headers
+    header("Access-Control-Allow-Origin: http://localhost:3000");
+    header("Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS");
+    header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
+    header('Content-type: application/json');
+
+    // data structure
+    echo json_encode( [
+      'result' => $result,
+      'message' => $message,
+      'error' => $error,
+      'data' => [
+        'username' => $username,
+        'comment' => $comment ]
+      ] );
 ?>
