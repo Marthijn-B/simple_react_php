@@ -22,7 +22,8 @@ class AddToGuestBook extends React.Component {
       $.ajax({
         data: this.state,
         type: 'POST',
-        url: 'http://simple_react_php.localhost/api/add.php',                success: function(data) {
+        url: 'http://simple_react_php.localhost/api/add.php',
+          success: function(data) {
           console.info(data)
         },
         error: function(xhr, status, err) {

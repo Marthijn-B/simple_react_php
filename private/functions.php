@@ -82,4 +82,17 @@ function console_log($output, $with_script_tags = true) {
     echo $js_code;
 }
 
+function convert_to_array($db_object) {
+  $array = [];
+  // var_dump($db_object);
+  while($item = mysqli_fetch_assoc($db_object)) {
+    $array[] = [
+      'id' => $item['id'],
+      'created' => $item['creationdate'],
+      'username' => $item['username'],
+      'comment' => $item['comment']
+    ];
+  }
+  return $array;
+}
 ?>

@@ -21,7 +21,7 @@
       // Check if there is a comment longer than 10 chars
       if (strlen($username) < 9) {
         $result = false;
-        $error[] =  "Your comment must atleast 10 characters";
+        $error[] =  "Your comment must be atleast 10 characters";
       }
 
 
@@ -31,7 +31,13 @@
         // http_response_code(400);
         $message =  "Please complete the form and try again.";
       } else {
-        $message = "Thank You " . $username . "! Your message has been saved.";
+        $sql_result = add_to_guestbook ($username, $comment);
+        if ($sql_result) {
+          $message = "Thank You " . $username . "! Your message has been saved.";
+        } else {
+          $message = "Your entry cannot be saved, please try again.";
+        }
+
       }
 
     } else {

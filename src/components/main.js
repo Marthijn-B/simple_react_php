@@ -1,6 +1,7 @@
 import React from 'react';
 
 import AddToGuestBook from './addtoguestbook';
+import ViewGuestBook from './viewguestbook';
 
 export default function Main() {
 
@@ -9,6 +10,7 @@ export default function Main() {
     <div>
 
       <AddToGuestBook />
+      <ViewGuestBook />
 
 
     </div>
