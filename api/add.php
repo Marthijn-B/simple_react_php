@@ -1,3 +1,5 @@
+<?php require_once('../private/initialize.php'); ?>
+
 <?php
     // Only process POST requests.
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -6,20 +8,20 @@
       $message = "";
       $error = [];
 
-      $username = $_POST["username"];
-      $comment = $_POST["comment"];
+      $username = trim($_POST["username"]);
+      $comment = trim($_POST["comment"]);
       //console.log($username, $comment);
 
       // Check if username is longer than 3 chars
-      if (strlen(trim($username)) < 2) {
+      if (strlen($username) < 2) {
         $result = false;
         $error[] = "Please enter a name three characters or more";
       }
 
       // Check if there is a comment longer than 10 chars
-      if (strlen(trim($username)) < 9) {
+      if (strlen($username) < 9) {
         $result = false;
-        $error[] =  "Please enter a comment of 10 characters or more";
+        $error[] =  "Your comment must atleast 10 characters";
       }
 
 

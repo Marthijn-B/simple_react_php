@@ -22,7 +22,7 @@ class AddToGuestBook extends React.Component {
       $.ajax({
         data: this.state,
         type: 'POST',
-        url: 'http://simple_react_php.localhost/add.php',                success: function(data) {
+        url: 'http://simple_react_php.localhost/api/add.php',                success: function(data) {
           console.info(data)
         },
         error: function(xhr, status, err) {
@@ -35,14 +35,14 @@ class AddToGuestBook extends React.Component {
   render() {
     return (
       <form>
-        <p>Enter your name: {this.state.username}</p>
+        <p>Enter your name:</p>
         <input
           className= 'field'
           title= 'Name'
           type='text'
           onChange={e => this.setState({ username: e.target.value })}
         />
-        <p>Your comments: {this.state.comment}</p>
+        <p>Your comments:</p>
         <input
           className = 'field'
           title = 'Comment'
