@@ -11,7 +11,8 @@ class ViewGuestBook extends React.Component {
     super(props);
     this.state = {
       data: [],
-      error: ''
+      message: '',
+      result: false
     };
   }
 
@@ -24,10 +25,15 @@ class ViewGuestBook extends React.Component {
         type: 'POST',
         url: 'http://simple_react_php.localhost/api/view.php',
         success: function(data) {
-          console.info(data)
+          //console.info(data)
           // TODO: save the data into the current state
-          // this.setState({data: data})
-        },
+          this.setState({
+            message: data.message,
+            result: data.result,
+            data: data.data
+          });
+          console.log(this.state);
+        }.bind(this),
         error: function(xhr, status, err) {
           console.error(status, err.toString())
         }
@@ -36,12 +42,35 @@ class ViewGuestBook extends React.Component {
   }
 
   render() {
+    const entries = this.state.data;
     return (
       <form>
         <p>View the guest book:</p>
         <Button variant="contained" color="primary" onClick={this.handleFormView}>
           View
         </Button>
+        { entries &&
+          <table>
+            <tbody>
+            <tr>
+              <th>Username</th>
+              <th>Comment</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+            {
+              entries.map((item,i) =>
+                <tr key={item.id}>
+                  <td>{item.username}</td>
+                  <td>{item.comment}</td>
+                  <td>{item.created}</td>
+                  <td><button title="Delete">Delete</button></td>
+                </tr>
+              )
+            }
+            </tbody>
+          </table>
+        }
       </form>
     );
   }

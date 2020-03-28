@@ -13,7 +13,8 @@ class AddToGuestBook extends React.Component {
       username: '',
       comment: '',
       message: '',
-      result: false
+      result: false,
+      error: []
     };
   }
 
@@ -28,9 +29,10 @@ class AddToGuestBook extends React.Component {
         success: function(data) {
           this.setState({
             message: data.message,
-            result: data.result
+            result: data.result,
+            error: data.error
           })
-          // console.log(this.state);
+          console.log(data);
           if (data.result) {
             this.setState ({
               username: '',
@@ -45,25 +47,15 @@ class AddToGuestBook extends React.Component {
       })
   }
 
-  componentDidMount() {
-    if (this.state.result) {
-      console.log("here");
-      this.setState ({
-        username: '',
-        comment: ''
-      })
-    }
-  }
-
   render() {
     const message = this.state.message;
     const result = this.state.result;
     return (
       <form>
         { message &&
-          <h3>
+          <p>
             {message}
-          </h3>
+          </p>
         }
         <p>Enter your name:</p>
         <input

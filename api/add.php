@@ -13,15 +13,15 @@
       //console.log($username, $comment);
 
       // Check if username is longer than 3 chars
-      if (strlen($username) < 2) {
+      if (strlen($username) < 3) {
         $result = false;
-        $error[] = "Please enter a name three characters or more";
+        $message = "Please enter a name three characters or more\n\r";
       }
 
       // Check if there is a comment longer than 10 chars
       if (strlen($comment) < 9) {
         $result = false;
-        $error[] =  "Your comment must be atleast 10 characters";
+        $message .=  "Your comment must be atleast 10 characters\n\r";
       }
 
 
@@ -29,11 +29,11 @@
      if ( !$result ) {
         // Set a 400 (bad request) response code and exit.
         // http_response_code(400);
-        $message =  "Please complete the form and try again.";
+        $message .=  " - Please complete the form and try again.";
       } else {
         $sql_result = add_to_guestbook ($username, $comment);
         if ($sql_result) {
-          $message = "Thank You " . $username . "! Your message has been saved.";
+          $message = "Thank You " . $username . "! Your message has been published and posted.";
         } else {
           $message = "Your entry cannot be saved, please try again.";
         }

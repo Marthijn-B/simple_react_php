@@ -34,6 +34,8 @@
     global $db;
 
     $sql = "SELECT * FROM guestbook ";
+    $sql .= "WHERE deleted = 'n' ";
+    $sql .= "ORDER BY creationdate DESC";
 
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
