@@ -17,7 +17,7 @@ class ViewGuestBook extends React.Component {
 
   handleFormView = (event) => {
     event.preventDefault();
-    console.log(this.state);
+    // console.log(this.state);
     // Send the form with AJAX
       $.ajax({
         data: this.state,
@@ -25,6 +25,7 @@ class ViewGuestBook extends React.Component {
         url: 'http://simple_react_php.localhost/api/view.php',
         success: function(data) {
           console.info(data)
+          // TODO: save the data into the current state
           // this.setState({data: data})
         },
         error: function(xhr, status, err) {
