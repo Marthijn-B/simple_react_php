@@ -19,7 +19,7 @@
       }
 
       // Check if there is a comment longer than 10 chars
-      if (strlen($username) < 9) {
+      if (strlen($comment) < 9) {
         $result = false;
         $error[] =  "Your comment must be atleast 10 characters";
       }
