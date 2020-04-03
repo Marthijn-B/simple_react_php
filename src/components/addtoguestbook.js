@@ -50,6 +50,7 @@ class AddToGuestBook extends React.Component {
   render() {
     const message = this.state.message;
     const result = this.state.result;
+    console.log("* This State *", this.state);
     return (
       <form>
         { message &&

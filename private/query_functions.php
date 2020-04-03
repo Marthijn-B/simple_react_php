@@ -42,4 +42,23 @@
     return $result;
   }
 
+  function delete_message_by_id($id) {
+    global $db;
+
+    $sql = "update guestbook ";
+    $sql .= " SET deleted = 'y' ";
+    $sql .= "WHERE id = '". $id . "' ";
+
+    $result = mysqli_query($db, $sql);
+    // For UPDATE statements, $result is true/false
+    if($result) {
+      return true;
+    } else {
+      // UPDATE failed
+      echo mysqli_error($db);
+      db_disconnect($db);
+      exit;
+    }
+  }
+
  ?>

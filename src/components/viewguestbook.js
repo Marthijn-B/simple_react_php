@@ -38,7 +38,35 @@ class ViewGuestBook extends React.Component {
           console.error(status, err.toString())
         }
       })
+  }
 
+  handleDelete = (event) => {
+    event.preventDefault();
+    // console.log(this.state);
+    // Send the form with AJAX
+      $.ajax({
+        // data: this.state,
+        type: 'POST',
+        url: 'http://simple_react_php.localhost/api/delete.php?id=30',
+        success: function(data) {
+          this.setState({
+            message: data.message,
+            result: data.result,
+            error: data.error
+          })
+          // console.log(data);
+          if (data.result) {
+            this.setState ({
+              username: '',
+              comment: ''
+            })
+          }
+
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.error(status, err.toString())
+        }
+      })
   }
 
   render() {
@@ -64,7 +92,7 @@ class ViewGuestBook extends React.Component {
                   <td>{item.username}</td>
                   <td>{item.comment}</td>
                   <td>{item.created}</td>
-                  <td><button title="Delete">Delete</button></td>
+                  <td><button title="Delete" onClick={this.handleDelete}>Delete</button></td>
                 </tr>
               )
             }
