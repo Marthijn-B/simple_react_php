@@ -15,9 +15,13 @@ class ViewGuestBook extends React.Component {
       result: false
     };
   }
+  
+  componentDidMount() {
+    this.handleFormView();
+  }
 
   handleFormView = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     // console.log(this.state);
     // Send the form with AJAX
       $.ajax({
@@ -40,14 +44,15 @@ class ViewGuestBook extends React.Component {
       })
   }
 
-  handleDelete = (event) => {
-    event.preventDefault();
+  handleDelete = (id) => {
+    //event.preventDefault();
+    console.log(id);
     // console.log(this.state);
     // Send the form with AJAX
       $.ajax({
         // data: this.state,
         type: 'POST',
-        url: 'http://simple_react_php.localhost/api/delete.php?id=30',
+        url: 'http://simple_react_php.localhost/api/delete.php?id='+id,
         success: function(data) {
           this.setState({
             message: data.message,
@@ -92,7 +97,7 @@ class ViewGuestBook extends React.Component {
                   <td>{item.username}</td>
                   <td>{item.comment}</td>
                   <td>{item.created}</td>
-                  <td><button title="Delete" onClick={this.handleDelete}>Delete</button></td>
+                  <td><button title={item.id} onClick={() => this.handleDelete(item.id)}>Delete</button></td>
                 </tr>
               )
             }
