@@ -10,76 +10,81 @@ class ViewGuestBook extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
-      message: '',
-      result: false
+      // data: [],
+      // message: '',
+      // result: false
     };
   }
-  
+
   componentDidMount() {
-    this.handleFormView();
+    // this.handleFormView();
   }
 
-  handleFormView = (event) => {
-    // event.preventDefault();
-    // console.log(this.state);
-    // Send the form with AJAX
-      $.ajax({
-        data: this.state,
-        type: 'POST',
-        url: 'http://simple_react_php.localhost/api/view.php',
-        success: function(data) {
-          //console.info(data)
-          // TODO: save the data into the current state
-          this.setState({
-            message: data.message,
-            result: data.result,
-            data: data.data
-          });
-          console.log(this.state);
-        }.bind(this),
-        error: function(xhr, status, err) {
-          console.error(status, err.toString())
-        }
-      })
+  componentDidUpdate() {
+  if (this.props.main_result === true) {
+    console.log("refresh");
+    this.props.update(false);
   }
+}
 
-  handleDelete = (id) => {
-    //event.preventDefault();
-    console.log(id);
-    // console.log(this.state);
-    // Send the form with AJAX
-      $.ajax({
-        // data: this.state,
-        type: 'POST',
-        url: 'http://simple_react_php.localhost/api/delete.php?id='+id,
-        success: function(data) {
-          this.setState({
-            message: data.message,
-            result: data.result,
-            error: data.error
-          })
-          // console.log(data);
-          if (data.result) {
-            this.setState ({
-              username: '',
-              comment: ''
-            })
-          }
+  // handleFormView = (event) => {
+  //   // Send the form with AJAX
+  //     $.ajax({
+  //       data: this.state,
+  //       type: 'POST',
+  //       url: 'http://simple_react_php.localhost/api/view.php',
+  //       success: function(data) {
+  //         //console.info(data)
+  //         // TODO: save the data into the current state
+  //         this.setState({
+  //           message: data.message,
+  //           result: data.result,
+  //           data: data.data
+  //         });
+  //         console.log(this.state);
+  //       }.bind(this),
+  //       error: function(xhr, status, err) {
+  //         console.error(status, err.toString())
+  //       }
+  //     })
+  // }
 
-        }.bind(this),
-        error: function(xhr, status, err) {
-          console.error(status, err.toString())
-        }
-      })
-  }
+  // handleDelete = (id) => {
+  //   //event.preventDefault();
+  //   console.log(id);
+  //   // console.log(this.state);
+  //   // Send the form with AJAX
+  //     $.ajax({
+  //       // data: this.state,
+  //       type: 'POST',
+  //       url: 'http://simple_react_php.localhost/api/delete.php?id='+id,
+  //       success: function(data) {
+  //         this.setState({
+  //           message: data.message,
+  //           result: data.result,
+  //           error: data.error
+  //         })
+  //         // console.log(data);
+  //         if (data.result) {
+  //           this.setState ({
+  //             username: '',
+  //             comment: ''
+  //           })
+  //         }
+  //
+  //       }.bind(this),
+  //       error: function(xhr, status, err) {
+  //         console.error(status, err.toString())
+  //       }
+  //     })
+  // }
 
   render() {
-    const entries = this.state.data;
+    const entries = this.props.data;
     return (
       <form>
         <p>View the guest book:</p>
-        <Button variant="contained" color="primary" onClick={this.handleFormView}>
+        <Button variant="contained" color="primary" onClick={this.props.handleFormView}>
           View
         </Button>
         { entries &&
@@ -97,7 +102,7 @@ class ViewGuestBook extends React.Component {
                   <td>{item.username}</td>
                   <td>{item.comment}</td>
                   <td>{item.created}</td>
-                  <td><button title={item.id} onClick={() => this.handleDelete(item.id)}>Delete</button></td>
+                  <td><button title={item.id} onClick={() => this.props.handleDelete(item.id)}>Delete</button></td>
                 </tr>
               )
             }

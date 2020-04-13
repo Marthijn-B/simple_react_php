@@ -32,6 +32,7 @@ class AddToGuestBook extends React.Component {
             result: data.result,
             error: data.error
           })
+          this.props.update(this.state.result);
           console.log(data);
           if (data.result) {
             this.setState ({
@@ -49,8 +50,7 @@ class AddToGuestBook extends React.Component {
 
   render() {
     const message = this.state.message;
-    const result = this.state.result;
-    console.log("* This State *", this.state);
+    // console.log("* This State *", this.state);
     return (
       <form>
         { message &&
